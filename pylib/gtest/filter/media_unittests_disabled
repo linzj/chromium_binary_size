@@ -1,0 +1,4 @@
+# if UC_BUILD
+# luozy or chenggk fix later 
+MimeUtilTest.CommonMediaMimeType
+# endif

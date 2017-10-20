@@ -1,0 +1,10 @@
+# if UC_BUILD
+# owner: zuojian.lzj@alibaba-inc.com
+CacheStorageManagerTest.DeletedCacheIgnoredInIndex
+NotificationIdGeneratorTest.DeterministicGeneration
+NotificationIdGeneratorTest.PersistentDifferentRenderProcessIds
+CacheStorageCacheTest/CacheStorageCacheTestP.WriteSideData/1
+CacheStorageCacheTest/CacheStorageCacheTestP.WriteSideData_QuotaManagerModified/1
+CacheStorageManagerTests/CacheStorageManagerTestP.GetOriginUsage/0
+CacheStorageManagerTests/CacheStorageManagerTestP.GetOriginUsage/1
+# endif

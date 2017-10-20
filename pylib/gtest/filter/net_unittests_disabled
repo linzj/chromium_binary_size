@@ -1,0 +1,38 @@
+# List of suppressions
+
+# if UC_BUILD_USE_SYSTEM_ICUDATA
+# disable using system icu
+FtpDirectoryListingParserTest.Parse/dir_listing_ls_34
+# endif
+
+# if UC_BUILD
+# this testcase was unstable when runnig on Nexus5x or Nexus6
+# owner: rulongchen.crl@alibaba-inc.com
+HttpCache.GET_Previous206
+HttpCache.GET_Previous206_NotModified
+HttpCache.RangeGET_NoDiskCache
+# endif
+
+# if UC_BUILD
+# owner: zzj98820@alibaba-inc.com
+# review from: http://gerrit.ucweb.local:8080/#/c/14461/
+HttpCache.FastNoStoreGET_DoneWithPending
+URLRequestContextBuilderTest.CustomHttpAuthHandlerFactory
+URLRequestContextBuilderTest.DefaultHttpAuthHandlerFactory
+URLRequestContextBuilderTest.DefaultSettings
+URLRequestContextBuilderTest.UserAgent
+URLRequestContextTest.MemoryDumpProvider
+# endif
+
+# if UC_BUILD
+# owner: zuojian.lzj@alibaba-inc.com
+DiskCacheBackendTest.SimpleCacheCalculateSizeOfEntriesBetween
+DiskCacheBackendTest.SimpleDoomRecent
+# endif
+
+# if UC_BUILD
+# owner: lxl100426@alibaba-inc.com
+ClientSocketPoolBaseTest.IgnoreLimits
+ClientSocketPoolBaseTest.IgnoreLimitsCancelOtherJob
+ClientSocketPoolBaseTest.RequestSocketsWhenAlreadyHaveAConnectJob
+# endif
