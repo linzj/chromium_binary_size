@@ -321,7 +321,7 @@ class ELFSymbolizer(object):
       self._proc = None
 
     def _WriteToA2lStdin(self, addr):
-      self._proc.stdin.write('%s\n' % hex(addr))
+      self._proc.stdin.write(('%s\n' % hex(addr)).encode('utf-8'))
       if self._symbolizer.inlines:
         # In the case of inlines we output an extra blank line, which causes
         # addr2line to emit a (??,??:0) tuple that we use as a boundary marker.
@@ -424,8 +424,11 @@ class ELFSymbolizer(object):
       try:
         lines_for_one_symbol = []
         while True:
-          line1 = process_pipe.readline().rstrip('\r\n')
-          line2 = process_pipe.readline().rstrip('\r\n')
+          try:
+              line1 = process_pipe.readline().decode('utf-8').rstrip('\r\n')
+              line2 = process_pipe.readline().decode('utf-8').rstrip('\r\n')
+          except:
+            break
           if not line1 or not line2:
             break
           inline_has_more_lines = inlines and (len(lines_for_one_symbol) == 0 or

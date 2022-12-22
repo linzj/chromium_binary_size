@@ -100,7 +100,7 @@ def MakeChildrenDictsIntoLists(node):
   if NODE_CHILDREN_KEY in node:
     largest_list_len = len(node[NODE_CHILDREN_KEY])
     child_list = []
-    for child in node[NODE_CHILDREN_KEY].itervalues():
+    for child in iter(node[NODE_CHILDREN_KEY]):
       child_largest_list_len = MakeChildrenDictsIntoLists(child)
       if child_largest_list_len > largest_list_len:
         largest_list_len = child_largest_list_len
@@ -307,7 +307,7 @@ def RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
   user_interrupted = False
   try:
     for line in nm_output_lines:
-      match = sNmPattern.match(line)
+      match = sNmPattern.match(line.decode('utf-8'))
       if match:
         location = match.group(5)
         if not location:
@@ -346,6 +346,7 @@ def RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
 
   with open(outfile, 'w') as out:
     for line in nm_output_lines:
+      line = line.decode('utf-8')
       match = sNmPattern.match(line)
       if match:
         location = match.group(5)
@@ -400,7 +401,7 @@ def GetNmSymbols(nm_infile, outfile, library, jobs, verbose,
 
   elif verbose:
     print('Using nm input from ' + nm_infile)
-  with file(nm_infile, 'r') as infile:
+  with open(nm_infile, 'r') as infile:
     return list(binary_size_utils.ParseNm(infile))
 
 
@@ -600,7 +601,7 @@ def main():
     # CPU power isn't the limiting factor. It's I/O limited, memory
     # bus limited and available-memory-limited. Too many processes and
     # the computer will run out of memory and it will be slow.
-    opts.jobs = max(2, (multiprocessing.cpu_count()))
+    opts.jobs = max(2, min(8, multiprocessing.cpu_count()))
 
   if opts.addr2line_binary:
     assert os.path.isfile(opts.addr2line_binary)
