@@ -303,6 +303,7 @@ def RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
   symbolizer = elf_symbolizer.ELFSymbolizer(library, addr2line_binary,
                                             map_address_symbol,
                                             max_concurrent_jobs=jobs,
+                                            addr2line_timeout=300,
                                             source_root_path=src_path)
   user_interrupted = False
   try:
