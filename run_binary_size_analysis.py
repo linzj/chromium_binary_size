@@ -336,7 +336,7 @@ def RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
     user_interrupted = True
     print('Patience you must have my young padawan.')
 
-  print ''
+  print('')
 
   if user_interrupted:
     print('Skipping the rest of the file mapping. '
@@ -378,9 +378,9 @@ def RunNm(binary, nm_binary):
 
   if nm_process.returncode != 0:
     if err_output:
-      raise Exception, err_output
+      raise Exception(err_output)
     else:
-      raise Exception, process_output
+      raise Exception(process_output)
 
   return process_output
 
@@ -392,14 +392,14 @@ def GetNmSymbols(nm_infile, outfile, library, jobs, verbose,
       outfile = tempfile.NamedTemporaryFile(delete=False).name
 
     if verbose:
-      print 'Running parallel addr2line, dumping symbols to ' + outfile
+      print('Running parallel addr2line, dumping symbols to ' + outfile)
     RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
                      disambiguate, src_path)
 
     nm_infile = outfile
 
   elif verbose:
-    print 'Using nm input from ' + nm_infile
+    print('Using nm input from ' + nm_infile)
   with file(nm_infile, 'r') as infile:
     return list(binary_size_utils.ParseNm(infile))
 
@@ -489,7 +489,7 @@ def CheckDebugFormatSupport(library, addr2line_binary):
   that and abort rather than produce meaningless output."""
   tool_output = subprocess.check_output([addr2line_binary, '--version'])
   version_re = re.compile(r'^GNU [^ ]+ .* (\d+).(\d+).*?$', re.M)
-  parsed_output = version_re.match(tool_output)
+  parsed_output = version_re.match(tool_output.decode('utf-8'))
   major = int(parsed_output.group(1))
   minor = int(parsed_output.group(2))
   supports_dwarf4 = major > 2 or major == 2 and minor > 22
@@ -600,7 +600,7 @@ def main():
     # CPU power isn't the limiting factor. It's I/O limited, memory
     # bus limited and available-memory-limited. Too many processes and
     # the computer will run out of memory and it will be slow.
-    opts.jobs = max(2, min(4, str(multiprocessing.cpu_count())))
+    opts.jobs = max(2, (multiprocessing.cpu_count()))
 
   if opts.addr2line_binary:
     assert os.path.isfile(opts.addr2line_binary)
@@ -629,7 +629,7 @@ def main():
 
   # Prepare output directory and report guts
   if not os.path.exists(opts.destdir):
-    os.makedirs(opts.destdir, 0755)
+    os.makedirs(opts.destdir, 0o755)
   nm_out = os.path.join(opts.destdir, 'nm.out')
   if opts.no_nm_out:
     nm_out = None
@@ -640,7 +640,7 @@ def main():
   data_js_file_name = os.path.join(opts.destdir, 'data.js')
   d3_out = os.path.join(opts.destdir, 'd3')
   if not os.path.exists(d3_out):
-    os.makedirs(d3_out, 0755)
+    os.makedirs(d3_out, 0o755)
   d3_src = os.path.join(os.path.dirname(__file__),
                         '..',
                         '..',
@@ -669,7 +669,7 @@ def main():
     symbol_path_origin_dir = os.path.abspath(os.getcwd())
   # Dump JSON for the HTML report.
   DumpCompactTree(symbols, symbol_path_origin_dir, data_js_file_name)
-  print 'Report saved to ' + opts.destdir + '/index.html'
+  print('Report saved to ' + opts.destdir + '/index.html')
 
 if __name__ == '__main__':
   sys.exit(main())
