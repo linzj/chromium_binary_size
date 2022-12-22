@@ -100,7 +100,7 @@ def MakeChildrenDictsIntoLists(node):
   if NODE_CHILDREN_KEY in node:
     largest_list_len = len(node[NODE_CHILDREN_KEY])
     child_list = []
-    for child in iter(node[NODE_CHILDREN_KEY]):
+    for child in node[NODE_CHILDREN_KEY].values():
       child_largest_list_len = MakeChildrenDictsIntoLists(child)
       if child_largest_list_len > largest_list_len:
         largest_list_len = child_largest_list_len
