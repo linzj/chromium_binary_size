@@ -642,9 +642,7 @@ def main():
   if not os.path.exists(d3_out):
     os.makedirs(d3_out, 0o755)
   d3_src = os.path.join(os.path.dirname(__file__),
-                        '..',
-                        '..',
-                        'third_party', 'd3', 'src')
+                        'd3', 'src')
   template_src = os.path.join(os.path.dirname(__file__),
                               'template')
   shutil.copy(os.path.join(d3_src, 'LICENSE'), d3_out)
