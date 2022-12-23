@@ -73,15 +73,15 @@ def SplitNoPathBucket(node):
     no_path_bucket = root_children[NAME_NO_PATH_BUCKET]
     old_children = no_path_bucket[NODE_CHILDREN_KEY]
     count = 0
-    for symbol_type, symbol_bucket in old_children.iteritems():
+    for symbol_type, symbol_bucket in old_children.items():
       count += len(symbol_bucket[NODE_CHILDREN_KEY])
     if count > BIG_BUCKET_LIMIT:
       new_children = {}
       no_path_bucket[NODE_CHILDREN_KEY] = new_children
       current_bucket = None
       index = 0
-      for symbol_type, symbol_bucket in old_children.iteritems():
-        for symbol_name, value in symbol_bucket[NODE_CHILDREN_KEY].iteritems():
+      for symbol_type, symbol_bucket in old_children.items():
+        for symbol_name, value in symbol_bucket[NODE_CHILDREN_KEY].items():
           if index % BIG_BUCKET_LIMIT == 0:
             group_no = (index / BIG_BUCKET_LIMIT) + 1
             current_bucket = _MkChild(no_path_bucket,
