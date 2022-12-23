@@ -492,9 +492,12 @@ def CheckDebugFormatSupport(library, addr2line_binary):
   tool_output = subprocess.check_output([addr2line_binary, '--version'])
   version_re = re.compile(r'^GNU [^ ]+ .* (\d+).(\d+).*?$', re.M)
   parsed_output = version_re.match(tool_output.decode('utf-8'))
-  major = int(parsed_output.group(1))
-  minor = int(parsed_output.group(2))
-  supports_dwarf4 = major > 2 or major == 2 and minor > 22
+  if parsed_output:
+      major = int(parsed_output.group(1))
+      minor = int(parsed_output.group(2))
+      supports_dwarf4 = major > 2 or major == 2 and minor > 22
+  else:
+      supports_dwarf4 = True
 
   if supports_dwarf4:
     return
