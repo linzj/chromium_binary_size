@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # Copyright 2014 The Chromium Authors. All rights reserved.
 # Use of this source code is governed by a BSD-style license that can be
 # found in the LICENSE file.
@@ -320,7 +320,7 @@ def RunElfSymbolizer(outfile, library, addr2line_binary, nm_binary, jobs,
             continue
           elif size == 0:
             # Save time by not looking up empty symbols (do they even exist?)
-            print('Empty symbol: ' + line)
+            print('Empty symbol: ' + line.decode('utf-8'))
           else:
             symbolizer.SymbolizeAsync(addr, addr)
             continue
